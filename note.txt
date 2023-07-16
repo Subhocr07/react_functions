@@ -1,0 +1,6 @@
+npx create-reacct-app appname[all small]
+server can read only index.html files
+
+how to render components
+
+first got to src>create a folder components>create a component.jsx>import that inside app.js>render
