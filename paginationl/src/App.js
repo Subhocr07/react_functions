@@ -6,13 +6,15 @@ import UserDetails from "./component/UserDetails";
 import Moloi from "./component/Moloi";
 import ShowList from "./component/ShowList";
 import Pagination from "./component/Pagination";
+import BackendDrivenPagination from "./component/BackendDrivenPagination";
 
 function App() {
   return (
     <div className="App">
       <Headings></Headings>
       {/* <ShowList /> */}
-      <Pagination />
+      {/* <Pagination /> */}
+      <BackendDrivenPagination />
       {/* <Headings />
       <Navbar />
       <UserDetails /> */}

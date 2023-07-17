@@ -3,21 +3,23 @@ import axios from "axios"
 import "./Pagination.css"
 const Pagination = () => {
     const [data, setData] = useState([])
-    const [page, setPage] = useState(4)
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0)
     const fetchData = async () => {
-        const res = await axios("https://dummyjson.com/products?limit=100")
+        const res = await axios(`https://dummyjson.com/products?limit=10&skip=${page * 10 - 10}`)
         // const data = await res.json()
         // console.log(res.data)
         if (res.data && res.data.products) {
             setData(res.data.products)
+            setTotalPages(res.data.total / 10)
         }
     }
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [page])
 
     const selectPageHandler = (index) => {
-        if (index >= 1 && index <= data.length / 10 && index !== page)
+        if (index >= 1 && index <= totalPages && index !== page)
             setPage(index)
     }
     return (
@@ -25,7 +27,7 @@ const Pagination = () => {
             {data.length > 0 && (
                 <div className="products">
                     {
-                        data.slice(page * 10 - 10, page * 10).map((product) => {
+                        data.map((product) => {
                             return (
                                 <span id={product.id}>
                                     <img src={product.thumbnail} alt={product.alt} />
@@ -40,7 +42,7 @@ const Pagination = () => {
                 <span
                     className={page > 1 ? "" : "pagination_disabled"}
                     onClick={() => { selectPageHandler(page - 1) }}>◀</span>
-                {[...Array(data.length / 10)].map((_, index) => {
+                {[...Array(totalPages)].map((_, index) => {
                     return <span
                         className={page === index + 1 ? "pagination_selected" : ""}
                         onClick={() => { selectPageHandler(index + 1) }}
@@ -48,7 +50,7 @@ const Pagination = () => {
                     </span>
                 })}
 
-                <span className={page < data.length / 10 ? "" : "pagination_disabled"} onClick={() => { selectPageHandler(page + 1) }}>▶</span>
+                <span className={page < totalPages ? "" : "pagination_disabled"} onClick={() => { selectPageHandler(page + 1) }}>▶</span>
             </div>}
         </div>
     )
