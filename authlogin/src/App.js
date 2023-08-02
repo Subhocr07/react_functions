@@ -15,10 +15,22 @@ function App() {
         <Route path="login" element={<Login />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="welcome" element={<Welcome />} />
-          <Route path="userslist" element={<UsersList />} />
-        </Route>
+        <Route
+          path="welcome"
+          element={
+            <RequireAuth>
+              <Welcome />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="userslist"
+          element={
+            <RequireAuth>
+              <UsersList />
+            </RequireAuth>
+          }
+        />
       </Route>
     </Routes>
   );
